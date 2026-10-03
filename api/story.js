@@ -90,7 +90,7 @@ module.exports=async function handler(req,res){
   if(req.method!=='POST') return send(res,405,{error:'POST only'});
   const b=await readJson(req); const scenario=cleanText(b.scenario||''); const count=[2,4,6].includes(Number(b.panelCount))?Number(b.panelCount):4;
   if(scenario.length<8) return send(res,400,{error:'اكتب موقف أو نص أوضح شوية'});
-  if(!process.env.GEMINI_API_KEY) return send(res,200,{story:fallbackStory(scenario,count),demo:true});
+  if(!process.env.GEMINI_API_KEY) return send(res,200,{story:newFallbackStory(scenario,count),demo:true});
   const dialectMap={egyptian:'Egyptian Arabic colloquial, natural modern everyday Egyptian', 'egyptian-cairene':'light contemporary Cairene Egyptian Arabic', 'egyptian-popular':'popular street-style Egyptian Arabic but not offensive', msa:'Modern Standard Arabic'};
   const toneMap={funny:'light and funny',sarcastic:'witty and sarcastic',natural:'natural and realistic',dramatic:'dramatic but believable',absurd:'absurd and extra funny'};
   const mode=b.mode==='script'?'SCRIPT MODE: The user supplied dialogue/script. Preserve its meaning and as much of the exact wording as possible; only split it naturally between panels.':'SITUATION MODE: The user input is CONTEXT ONLY, not dialogue. Understand what happened, infer the characters and relationships, then WRITE ALL dialogue from scratch. Do not quote, paraphrase, mirror, or recycle the user\'s wording in dialogue, captions, or title. Only proper names, essential numbers, brands, or indispensable factual terms may be reused.';
@@ -102,6 +102,6 @@ module.exports=async function handler(req,res){
     if(story.panels.length!==count) throw new Error('عدد الكادرات غير مكتمل');
     return send(res,200,{story,demo:false});
   }catch(e){
-    console.error(e); return send(res,200,{story:fallbackStory(scenario,count),demo:true,warning:'AI fallback: '+e.message});
+    console.error(e); return send(res,200,{story:newFallbackStory(scenario,count),demo:true,warning:'AI fallback: '+e.message});
   }
 }
