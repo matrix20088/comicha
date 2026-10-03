@@ -82,7 +82,10 @@ async function generateComic(){
     const res=await fetch('/api/story',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({
       scenario, mode:state.mode, panelCount:state.panelCount, style:$('#style').value, tone:$('#tone').value, dialect:$('#dialect').value
     })});
-    const data=await res.json();
+    const raw=await res.text();
+    let data;
+    try{ data=JSON.parse(raw); }
+    catch{ throw new Error(res.ok ? 'السيرفر رجّع رد غير مفهوم. جرّب تاني.' : 'حصل خطأ في السيرفر. جرّب كمان شوية.'); }
     if(!res.ok) throw new Error(data.error||'مشكلة في كتابة الكوميك');
     state.story=data.story; state.images=Array(state.story.panels.length).fill(null);
     $('#comicTitle').textContent=state.story.title||'الكوميك بتاعك';
@@ -145,7 +148,10 @@ async function generatePanelImage(i,force=false){
     const res=await fetch('/api/image',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({
       panel:state.story.panels[i], characters:state.story.characters, style:$('#style').value, title:state.story.title, panelIndex:i, totalPanels:state.story.panels.length
     })});
-    const data=await res.json();
+    const raw=await res.text();
+    let data;
+    try{ data=JSON.parse(raw); }
+    catch{ throw new Error(res.ok ? 'رد الرسم غير مفهوم' : 'خدمة الرسم حصل فيها خطأ'); }
     if(!res.ok) throw new Error(data.error||'تعذر رسم الكادر');
     state.images[i]=data.image;
     const img=panelEl.querySelector('.panel-image'); img.src=data.image;
