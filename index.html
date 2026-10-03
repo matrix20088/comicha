@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#120d2d" />
+  <title>كوميكها — حوّل أي موقف لكوميك بالذكاء الاصطناعي</title>
+  <meta name="description" content="اشرح موقفك بكلمتين، وكوميكها يحوله لقصة كوميك كاملة بحوار مصري عامي وصور مولدة بالذكاء الاصطناعي." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="noise"></div>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="كوميكها">
+      <span class="logo-mark">ك</span>
+      <span class="brand-text">كوميكها<span class="dot">.</span></span>
+    </a>
+    <div class="top-actions">
+      <button class="ghost-btn" id="examplesBtn">أمثلة جاهزة</button>
+      <span class="beta">BETA</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span>✨</span> أول مولّد كوميٓ مصري بالمواقف</div>
+        <h1>احكي اللي حصل…<br><span>وسيبه علينا كوميك.</span></h1>
+        <p>اكتب موقف حصل معاك، فكرة مضحكة، خناقة، موقف شغل أو حتى جملة واحدة. الذكاء الاصطناعي هيحوّلها لكادرات وشخصيات وحوار مصري عامي.</p>
+        <div class="hero-badges">
+          <span>🇪🇬 عامية مصرية طبيعية</span>
+          <span>🎨 6 ستايلات رسم</span>
+          <span>💬 كلام عربي مظبوط</span>
+        </div>
+      </div>
+      <div class="mini-comic" aria-hidden="true">
+        <div class="mini-panel p1"><span class="mini-bubble">التقرير خلص؟</span><i class="face">😐</i></div>
+        <div class="mini-panel p2"><span class="mini-bubble b2">أيوه… فاضل بس أبدأ فيه 😅</span><i class="face">😅</i></div>
+        <div class="burst">POW!</div>
+      </div>
+    </section>
+
+    <section class="studio" id="studio">
+      <div class="studio-head">
+        <div>
+          <span class="step">01</span>
+          <h2>قولنا الموقف</h2>
+        </div>
+        <span class="privacy">🔒 كلامك بيتبعت للذكاء الاصطناعي بس وقت التوليد</span>
+      </div>
+
+      <div class="mode-switch" role="tablist">
+        <button class="mode active" data-mode="situation" role="tab">🎬 اشرح موقف</button>
+        <button class="mode" data-mode="script" role="tab">✍️ عندي نص جاهز</button>
+      </div>
+
+      <div class="prompt-wrap">
+        <textarea id="scenario" maxlength="1800" placeholder="مثال: المدير سألني التقرير خلص ولا لأ، وأنا كنت لسه حتى ما فتحتش الملف… حاولت ألف وأدور لحد ما الكمبيوتر عمل تحديث ويندوز قدامه 😂"></textarea>
+        <div class="prompt-footer">
+          <button id="surpriseBtn" class="tiny-btn">🎲 هاتلي فكرة</button>
+          <span><b id="charCount">0</b> / 1800</span>
+        </div>
+      </div>
+
+      <div class="options-grid">
+        <label class="field">
+          <span>عدد الكادرات</span>
+          <div class="segmented" id="panelCount">
+            <button data-value="2">2</button>
+            <button class="active" data-value="4">4</button>
+            <button data-value="6">6</button>
+          </div>
+        </label>
+
+        <label class="field">
+          <span>ستايل الرسم</span>
+          <select id="style">
+            <option value="egyptian-cartoon">كاريكاتير مصري</option>
+            <option value="modern-comic">كوميٓ عصري</option>
+            <option value="manga">مانجا</option>
+            <option value="3d">3D كرتوني</option>
+            <option value="sketch">رسم يدوي</option>
+            <option value="retro">ريترو التسعينات</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>نبرة الحوار</span>
+          <select id="tone">
+            <option value="funny">خفيف ومضحك</option>
+            <option value="sarcastic">ساخر</option>
+            <option value="natural">طبيعي</option>
+            <option value="dramatic">درامي</option>
+            <option value="absurd">عبثي زيادة 😂</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>اللهجة</span>
+          <select id="dialect">
+            <option value="egyptian">مصري عامي</option>
+            <option value="egyptian-cairene">قاهراوي خفيف</option>
+            <option value="egyptian-popular">مصري شعبي</option>
+            <option value="msa">عربي فصحى</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="generate-row">
+        <button class="generate-btn" id="generateBtn">
+          <span class="btn-icon">✦</span>
+          <span>حوّلها لكوميك</span>
+          <kbd>AI</kbd>
+        </button>
+        <p>التوليد الحقيقي يحتاج مفتاح Gemini على السيرفر. بدون المفتاح التطبيق يشتغل تلقائيًا بوضع العرض التجريبي.</p>
+      </div>
+    </section>
+
+    <section class="result-section hidden" id="resultSection">
+      <div class="result-head">
+        <div>
+          <span class="step">02</span>
+          <h2 id="comicTitle">الكوميك بتاعك</h2>
+        </div>
+        <div class="result-actions">
+          <button class="ghost-btn" id="downloadBtn">⬇️ تنزيل PNG</button>
+          <button class="primary-small" id="shareBtn">↗ مشاركة</button>
+        </div>
+      </div>
+      <div class="status-bar hidden" id="statusBar"></div>
+      <div class="comic-grid" id="comicGrid"></div>
+      <div class="result-foot">
+        <button class="ghost-btn" id="newComicBtn">＋ كوميٓ جديد</button>
+        <span>تقدر تعدّل أي جملة مباشرة قبل التنزيل.</span>
+      </div>
+    </section>
+
+    <section class="how">
+      <div class="section-title"><span>⚡</span><h2>من موقف عادي لكوميك في 3 خطوات</h2></div>
+      <div class="how-grid">
+        <article><b>1</b><h3>احكي الموقف</h3><p>اكتبه بطريقتك من غير ما ترتبه أو تألف حوار.</p></article>
+        <article><b>2</b><h3>الـAI يخرجه</h3><p>يفهم الشخصيات والمشهد ويكتب حوار مصري ويقسّمه لكادرات.</p></article>
+        <article><b>3</b><h3>نزّل وانشر</h3><p>عدّل الكلام لو حبيت، نزّل الصورة وانشرها في أي مكان.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="examplesDialog">
+    <button class="dialog-close" id="closeExamples">×</button>
+    <h3>أمثلة تقدر تبدأ بيها</h3>
+    <div class="examples-list" id="examplesList"></div>
+  </dialog>
+
+  <canvas id="exportCanvas" class="hidden"></canvas>
+  <div class="toast" id="toast"></div>
+  <script src="/app.js" defer></script>
+</body>
+</html>
