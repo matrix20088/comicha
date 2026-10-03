@@ -41,8 +41,11 @@ $$('.mode').forEach(btn=>btn.addEventListener('click',()=>{
   $$('.mode').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
   state.mode=btn.dataset.mode;
   $('#scenario').placeholder = state.mode === 'situation'
-    ? 'مثال: المدير سألني التقرير خلص ولا لأ، وأنا كنت لسه حتى ما فتحتش الملف…'
+    ? 'احكي اللي حصل من غير ما تكتب حوار. مثال: المدير سألني عن التقرير وأنا أصلًا ما بدأتش، وحاولت أهرب من السؤال…'
     : 'اكتب الحوار أو النص زي ما عايزه يظهر. مثال:\nالمدير: التقرير خلص؟\nأنا: أيوه… فاضل بس أبدأ فيه.';
+  $('#modeHint').textContent = state.mode === 'situation'
+    ? '🧠 اكتب اللي حصل بطريقتك. هنفهم السياق ونكتب الحوار من الصفر — مش هننسخ كلامك.'
+    : '✍️ هنا هنحافظ على نصك قدر الإمكان ونقسّمه لكادرات بشكل طبيعي.';
 }));
 
 $$('#panelCount button').forEach(btn=>btn.addEventListener('click',()=>{
@@ -86,7 +89,7 @@ async function generateComic(){
     $('#resultSection').classList.remove('hidden');
     renderPanels();
     $('#resultSection').scrollIntoView({behavior:'smooth',block:'start'});
-    setStatus(data.demo ? 'وضع تجريبي: السيناريو شغال محليًا. أضف GEMINI_API_KEY على Vercel لتفعيل الكتابة والصور بالذكاء الاصطناعي.' : 'السيناريو جاهز ✨ دلوقتي بنرسم الكادرات…');
+    setStatus(data.demo ? 'وضع تجريبي: الحوار اتكتب كنموذج من نوع الموقف من غير نسخ كلامك. أضف GEMINI_API_KEY لتفعيل فهم السياق والرسم الحقيقي.' : (state.mode==='situation' ? 'فهمنا الموقف وكتبنا الحوار من الصفر ✨ دلوقتي بنرسم الكادرات…' : 'رتبنا نصك للكوميك ✨ دلوقتي بنرسم الكادرات…'));
     await generateAllImages();
     setStatus(data.demo ? 'خلصنا النسخة التجريبية. بعد إضافة مفتاح Gemini هتتولد رسومات AI حقيقية.' : 'الكوميك جاهز 🎉 تقدر تعدّل الكلام أو تعيد توليد أي كادر.');
   }catch(err){
