@@ -1,7 +1,8 @@
 {
   "functions": {
-    "api/story.js": { "maxDuration": 60 },
-    "api/image.js": { "maxDuration": 60 }
+    "api/generate.js": {
+      "maxDuration": 120
+    }
   },
   "headers": [
     {
